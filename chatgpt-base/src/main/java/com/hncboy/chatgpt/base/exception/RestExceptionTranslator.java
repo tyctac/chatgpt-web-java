@@ -44,7 +44,7 @@ public class RestExceptionTranslator {
         // 判断场景值，定制化异常信息
         String message = "";
         if (e.getType().equals(NotLoginException.NOT_TOKEN)) {
-            message = "未提供 token";
+            message = "未提供 token, test log";
         } else if (e.getType().equals(NotLoginException.INVALID_TOKEN)) {
             message = "token 无效";
         } else if (e.getType().equals(NotLoginException.TOKEN_TIMEOUT)) {
