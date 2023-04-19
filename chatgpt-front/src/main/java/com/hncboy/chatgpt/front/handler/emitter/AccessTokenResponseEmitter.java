@@ -16,6 +16,7 @@ import com.hncboy.chatgpt.front.api.storage.AccessTokenDatabaseDataStorage;
 import com.hncboy.chatgpt.front.domain.request.ChatProcessRequest;
 import com.hncboy.chatgpt.front.service.ChatMessageService;
 import com.unfbx.chatgpt.entity.chat.Message;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 
@@ -28,6 +29,7 @@ import java.util.UUID;
  * @date 2023/3/24 13:12
  * AccessToken 响应处理
  */
+@Slf4j
 @Component
 public class AccessTokenResponseEmitter implements ResponseEmitter {
 
@@ -46,6 +48,7 @@ public class AccessTokenResponseEmitter implements ResponseEmitter {
     @Override
     public ResponseBodyEmitter requestToResponseEmitter(ChatProcessRequest chatProcessRequest, ResponseBodyEmitter emitter) {
         // 构建 accessTokenApiClient
+        log.info("access token is here====>", chatConfig.getOpenaiAccessToken());
         AccessTokenApiClient accessTokenApiClient = AccessTokenApiClient.builder()
                 .accessToken(chatConfig.getOpenaiAccessToken())
                 .reverseProxy(chatConfig.getApiReverseProxy())

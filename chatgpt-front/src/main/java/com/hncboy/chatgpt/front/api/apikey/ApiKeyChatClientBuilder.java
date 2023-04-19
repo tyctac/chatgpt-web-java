@@ -6,6 +6,7 @@ import com.hncboy.chatgpt.base.enums.ApiTypeEnum;
 import com.hncboy.chatgpt.base.util.OkHttpClientUtil;
 import com.unfbx.chatgpt.OpenAiStreamClient;
 import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
 
 import java.net.InetSocketAddress;
@@ -17,6 +18,7 @@ import java.util.Collections;
  * @date 2023/3/24 16:09
  * ApiKey 聊天 Client 构建者
  */
+@Slf4j
 @UtilityClass
 public class ApiKeyChatClientBuilder {
 
@@ -31,6 +33,7 @@ public class ApiKeyChatClientBuilder {
         OkHttpClient okHttpClient = OkHttpClientUtil.getInstance(ApiTypeEnum.API_KEY, chatConfig.getTimeoutMs(),
                 chatConfig.getTimeoutMs(), chatConfig.getTimeoutMs(), getProxy());
 
+        log.info("api key is here===> ", chatConfig.getOpenaiApiKey());
         return OpenAiStreamClient.builder()
                 .okHttpClient(okHttpClient)
                 .apiKey(Collections.singletonList(chatConfig.getOpenaiApiKey()))
