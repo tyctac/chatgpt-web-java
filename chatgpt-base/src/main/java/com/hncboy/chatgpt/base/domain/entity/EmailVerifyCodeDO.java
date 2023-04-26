@@ -34,7 +34,7 @@ public class EmailVerifyCodeDO {
     /**
      * 验证码唯一
      */
-    private String verifyCode;
+    private String  verifyCode;
 
     /**
      * 是否使用，false 否，true 是

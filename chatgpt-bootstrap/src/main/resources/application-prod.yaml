@@ -47,13 +47,13 @@ email:
   # SMTP服务器地址
   host: ${EMAIL_HOST:xxxxxx}
   # 服务器一般默认 25 端口
-  port: ${EMAIL_PORT:25}
+  port: ${EMAIL_PORT:465}
   # 邮箱地址
-  from: ${EMAIL_FROM:xxxxxx}
+  from: ${EMAIL_FROM:lzw1639@163.com}
   # 用户名，发件人前缀
-  user: ${EMAIL_USER:xxxxxx}
+  user: ${EMAIL_USER:lzw1639}
   # 如果要授权码，这里就是传授权码
-  pass: ${EMAIL_PASS:}
+  pass: ${EMAIL_PASS:13855280567}
   # 是否需要授权，决定是否要设置授权码
   auth: ${EMAIL_AUTH:true}
   # 邮箱验证码有效期（单位，分钟）

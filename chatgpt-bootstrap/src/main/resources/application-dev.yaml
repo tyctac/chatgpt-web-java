@@ -45,15 +45,15 @@ chat:
 # 邮箱验证相关
 email:
   # SMTP服务器地址
-  host: ${EMAIL_HOST:xxxxxx}
+  host: ${EMAIL_HOST:smtp.163.com}
   # 服务器一般默认 25 端口
-  port: ${EMAIL_PORT:25}
+  port: ${EMAIL_PORT:465}
   # 邮箱地址
-  from: ${EMAIL_FROM:xxxxxx}
+  from: ${EMAIL_FROM:13051103518@163.com}
   # 用户名，发件人前缀
-  user: ${EMAIL_USER:xxxxxx}
-  # 如果要授权码，这里就是传授权码
-  pass: ${EMAIL_PASS:}
+  user: ${EMAIL_USER:13051103518@163.com}
+  # 如果要授权码，这里就是传授权码  DWYCBKPXSMHCJFKX
+  pass: ${EMAIL_PASS:DWYCBKPXSMHCJFKX}
   # 是否需要授权，决定是否要设置授权码
   auth: ${EMAIL_AUTH:true}
   # 邮箱验证码有效期（单位，分钟）

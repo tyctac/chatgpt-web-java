@@ -17,7 +17,7 @@ public enum UserExtraBindingTypeEnum {
     /**
      * 邮箱
      */
-    BIND_EMAIL("email", "邮箱绑定");
+    BIND_EMAIL("email", "ttt"); //邮箱绑定
 
     @EnumValue
     private final String code;
