@@ -23,4 +23,10 @@ ENV MYSQL_ROOT_PASSWORD=123456
 HEALTHCHECK --interval=5s --timeout=3s \
     CMD mysql -h localhost -uroot -p${MYSQL_ROOT_PASSWORD} -e 'SELECT 1' 2>/dev/null || exit 1
 
+
+# 设置时区为 Asia/Tokyo 
+ENV TZ=Asia/Tokyo
+# 设置容器的时区
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 CMD ["mysqld"]
