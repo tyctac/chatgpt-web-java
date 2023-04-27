@@ -30,13 +30,19 @@ public class ApiKeyChatClientBuilder {
     public OpenAiStreamClient buildOpenAiStreamClient() {
         ChatConfig chatConfig = SpringUtil.getBean(ChatConfig.class);
 
-        OkHttpClient okHttpClient = OkHttpClientUtil.getInstance(ApiTypeEnum.API_KEY, chatConfig.getTimeoutMs(),
-                chatConfig.getTimeoutMs(), chatConfig.getTimeoutMs(), getProxy());
+        OkHttpClient okHttpClient = OkHttpClientUtil.getInstance(
+                ApiTypeEnum.API_KEY,
+                chatConfig.getTimeoutMs(),
+                chatConfig.getTimeoutMs(),
+                chatConfig.getTimeoutMs(),
+                getProxy()
+        );
 
-        log.info("api key is here===> ", chatConfig.getOpenaiApiKey());
+        log.info("api key is here===> " + chatConfig.getOpenaiApiKey().toString());
+        log.info("api key is here===> " + chatConfig.getOpenaiApiBaseUrl().toString());
         return OpenAiStreamClient.builder()
-                .okHttpClient(okHttpClient)
                 .apiKey(Collections.singletonList(chatConfig.getOpenaiApiKey()))
+                .okHttpClient(okHttpClient)
                 .apiHost(chatConfig.getOpenaiApiBaseUrl())
                 .build();
     }
@@ -51,6 +57,9 @@ public class ApiKeyChatClientBuilder {
         // 国内需要代理
         Proxy proxy = Proxy.NO_PROXY;
         if (chatConfig.hasHttpProxy()) {
+            log.info(" proxy is here===> " + chatConfig.getHttpProxyHost().toString() );
+            log.info(" proxy port is here===> " + chatConfig.getHttpProxyPort() );
+
             proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(chatConfig.getHttpProxyHost(), chatConfig.getHttpProxyPort()));
         }
         return proxy;
