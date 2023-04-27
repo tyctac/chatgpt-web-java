@@ -1,0 +1,37 @@
+FROM maven:3.8.3-openjdk-17 AS build
+# 复制项目文件到容器中
+COPY . /app
+# 设置工作目录
+WORKDIR /app
+# 构建项目
+
+
+#RUN rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7 && \
+#    curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirror.centos.org/centos/7/os/x86_64/Packages/CentOS-Base.repo && \
+#    rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && \
+#    yum install -y yum-utils
+RUN echo "hello test---->"
+#RUN microdnf upgrade
+
+RUN microdnf clean all
+RUN microdnf install dnf
+
+RUN dnf install -y freetype fontconfig
+
+RUN mvn clean package  --settings settings.xml
+
+#TODO FROM openjdk:17-jdk-slim
+# 复制生成的 jar 文件到容器中
+#COPY --from=0 /app/chatgpt-bootstrap/target/*.jar /app/app.jar
+COPY /app/chatgpt-bootstrap/target/*.jar /app/app.jar
+# 设置工作目录
+WORKDIR /app
+# 暴露端口
+EXPOSE 3002
+# 设置时区为 Asia/Shanghai
+ENV TZ=Asia/Shanghai
+# 设置容器的时区
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+# 定义启动命令
+ENTRYPOINT ["sh","-c","java -jar app.jar"]
