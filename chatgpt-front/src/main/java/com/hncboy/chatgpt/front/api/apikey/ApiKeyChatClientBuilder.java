@@ -60,6 +60,20 @@ public class ApiKeyChatClientBuilder {
      *
      * @return Proxy
      */
+    private Proxy getProxyOld() {
+        ChatConfig chatConfig = SpringUtil.getBean(ChatConfig.class);
+        // 国内需要代理
+        Proxy proxy = Proxy.NO_PROXY;
+        if (chatConfig.hasHttpProxy()) {
+            log.info(" proxy is here===> " + chatConfig.getHttpProxyHost().toString() );
+            log.info(" proxy port is here===> " + chatConfig.getHttpProxyPort() );
+
+            proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(chatConfig.getHttpProxyHost(), chatConfig.getHttpProxyPort()));
+
+        }
+        return proxy;
+    }
+
     private Proxy getProxy() {
         ChatConfig chatConfig = SpringUtil.getBean(ChatConfig.class);
         // 国内需要代理
@@ -69,7 +83,8 @@ public class ApiKeyChatClientBuilder {
             log.info(" proxy port is here===> " + chatConfig.getHttpProxyPort() );
 
 //            proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(chatConfig.getHttpProxyHost(), chatConfig.getHttpProxyPort()));
-              proxy = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(chatConfig.getHttpProxyHost(), chatConfig.getHttpProxyPort()));
+            InetSocketAddress proxyAddr = new InetSocketAddress(chatConfig.getHttpProxyHost(), chatConfig.getHttpProxyPort());
+            proxy = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(chatConfig.getHttpProxyHost(), chatConfig.getHttpProxyPort()));
 
         }
         return proxy;
