@@ -40,11 +40,19 @@ public class ApiKeyChatClientBuilder {
 
         log.info("api key is here===> " + chatConfig.getOpenaiApiKey().toString());
         log.info("api key is here===> " + chatConfig.getOpenaiApiBaseUrl().toString());
-        return OpenAiStreamClient.builder()
+        OpenAiStreamClient oas = OpenAiStreamClient.builder()
                 .apiKey(Collections.singletonList(chatConfig.getOpenaiApiKey()))
                 .okHttpClient(okHttpClient)
                 .apiHost(chatConfig.getOpenaiApiBaseUrl())
                 .build();
+        log.info("api key is here========> " + oas.getApiKey());
+
+        return oas;
+//        return OpenAiStreamClient.builder()
+//                .apiKey(Collections.singletonList(chatConfig.getOpenaiApiKey()))
+//                .okHttpClient(okHttpClient)
+//                .apiHost(chatConfig.getOpenaiApiBaseUrl())
+//                .build();
     }
 
     /**
@@ -60,7 +68,9 @@ public class ApiKeyChatClientBuilder {
             log.info(" proxy is here===> " + chatConfig.getHttpProxyHost().toString() );
             log.info(" proxy port is here===> " + chatConfig.getHttpProxyPort() );
 
-            proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(chatConfig.getHttpProxyHost(), chatConfig.getHttpProxyPort()));
+//            proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(chatConfig.getHttpProxyHost(), chatConfig.getHttpProxyPort()));
+              proxy = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(chatConfig.getHttpProxyHost(), chatConfig.getHttpProxyPort()));
+
         }
         return proxy;
     }
