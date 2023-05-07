@@ -40,11 +40,16 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void sendForVerifyCode(String targetEmail, String verifyCode) {
         String url = emailConfig.getVerificationRedirectUrl().concat(verifyCode);
-        String content = "点击下面的网址完成【StarGPT】账号的注册：" + url;
+        String content = "点击下面的网址完成【smartAI】账号的注册：+\n" +
+        "亲爱的用户，感谢您注册我们的网站。为了激活您的账号，请点击下面的链接，或者复制到浏览器中打开：\n" +
+                 url +
+                "如果您没有注册过我们的网站，请忽略这封邮件。\n" +
+                "祝您使用愉快！\n" +
+                "smartmind-ai tech support\n";
 
         // 记录日志
         try {
-            String sendMsgId = this.sendMessage(targetEmail, url);
+            String sendMsgId = this.sendMessage(targetEmail, content);
             emailLogService.createSuccessLogBySysLog(sendMsgId, mailAccount.getFrom(), targetEmail, EmailBizTypeEnum.REGISTER_VERIFY, content);
         } catch (Exception e) {
             emailLogService.createFailedLogBySysLog("", mailAccount.getFrom(), targetEmail, EmailBizTypeEnum.REGISTER_VERIFY, content, e.getMessage());
