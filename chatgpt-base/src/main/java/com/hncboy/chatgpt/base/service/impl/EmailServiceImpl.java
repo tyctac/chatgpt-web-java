@@ -40,12 +40,13 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void sendForVerifyCode(String targetEmail, String verifyCode) {
         String url = emailConfig.getVerificationRedirectUrl().concat(verifyCode);
-        String content = "点击下面的网址完成【smartAI】账号的注册：+\n" +
-        "亲爱的用户，感谢您注册我们的网站。为了激活您的账号，请点击下面的链接，或者复制到浏览器中打开：\n" +
-                 url +
+        String content = "点击下面的网址完成【smartAI】账号的注册：\n" +
+        "   亲爱的用户，感谢您注册我们的网站。为了激活您的账号，请点击下面的链接，或者复制到浏览器中打开：\n" +
+                 url + "\n" +
                 "如果您没有注册过我们的网站，请忽略这封邮件。\n" +
                 "祝您使用愉快！\n" +
-                "smartmind-ai tech support\n";
+                "\n\n" +
+                "SmartMind-AI Tech Support\n";
 
         // 记录日志
         try {
@@ -57,6 +58,6 @@ public class EmailServiceImpl implements EmailService {
     }
 
     protected String sendMessage(String targetEmail, String content) {
-        return MailUtil.send(mailAccount, targetEmail, "【StarGPT】账号注册", content, false);
+        return MailUtil.send(mailAccount, targetEmail, "【smartAI】账号注册", content, false);
     }
 }
