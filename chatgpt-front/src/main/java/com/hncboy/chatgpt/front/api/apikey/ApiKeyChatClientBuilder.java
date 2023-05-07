@@ -5,6 +5,7 @@ import com.hncboy.chatgpt.base.config.ChatConfig;
 import com.hncboy.chatgpt.base.enums.ApiTypeEnum;
 import com.hncboy.chatgpt.base.util.OkHttpClientUtil;
 import com.unfbx.chatgpt.OpenAiStreamClient;
+import com.unfbx.chatgpt.function.KeyRandomStrategy;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
@@ -40,10 +41,12 @@ public class ApiKeyChatClientBuilder {
 
         log.info("api key is here===> " + chatConfig.getOpenaiApiKey().toString());
         log.info("api key is here===> " + chatConfig.getOpenaiApiBaseUrl().toString());
-        OpenAiStreamClient oas = OpenAiStreamClient.builder()
+        OpenAiStreamClient oas = OpenAiStreamClient
+                .builder()
+                .apiHost(chatConfig.getOpenaiApiBaseUrl())
+                .keyStrategy(new KeyRandomStrategy())
                 .apiKey(Collections.singletonList(chatConfig.getOpenaiApiKey()))
                 .okHttpClient(okHttpClient)
-                .apiHost(chatConfig.getOpenaiApiBaseUrl())
                 .build();
         log.info("api key is here========> " + oas.getApiKey());
 
@@ -60,7 +63,7 @@ public class ApiKeyChatClientBuilder {
      *
      * @return Proxy
      */
-    private Proxy getProxyOld() {
+    private Proxy getProxy() {
         ChatConfig chatConfig = SpringUtil.getBean(ChatConfig.class);
         // 国内需要代理
         Proxy proxy = Proxy.NO_PROXY;
@@ -74,7 +77,7 @@ public class ApiKeyChatClientBuilder {
         return proxy;
     }
 
-    private Proxy getProxy() {
+    private Proxy getProxy2() {
         ChatConfig chatConfig = SpringUtil.getBean(ChatConfig.class);
         // 国内需要代理
         Proxy proxy = Proxy.NO_PROXY;
