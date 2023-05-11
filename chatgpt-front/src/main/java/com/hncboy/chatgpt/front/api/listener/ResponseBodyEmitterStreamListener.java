@@ -43,9 +43,17 @@ public class ResponseBodyEmitterStreamListener extends AbstractStreamListener {
 
     @Override
     public void onError(String receivedMessage, Throwable t, @Nullable Response response) {
+        String responseStr = null;
         try {
             ChatReplyMessageVO chatReplyMessageVO = new ChatReplyMessageVO();
-            chatReplyMessageVO.setText(receivedMessage.concat("\n【接收消息处理异常，响应中断】"));
+
+            if (receivedMessage.contains("Rate limit reached")) {
+                chatReplyMessageVO.setText(receivedMessage.concat("\n【消息发送太频繁，请等一下再试试】"));
+            }
+            else {
+                chatReplyMessageVO.setText(receivedMessage.concat("\n【接收消息处理异常，响应中断】"));
+
+            }
             emitter.send(ObjectMapperUtil.toJson(chatReplyMessageVO));
         } catch (Exception e) {
             log.warn("消息发送异常，处理异常发送消息时出错", e);

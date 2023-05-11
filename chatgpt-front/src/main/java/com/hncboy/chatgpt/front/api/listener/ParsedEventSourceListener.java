@@ -157,8 +157,11 @@ public class ParsedEventSourceListener extends EventSourceListener {
         try {
             if (Objects.nonNull(response) && Objects.nonNull(response.body())) {
                 responseStr = response.body().string();
+                if (responseStr.contains("Rate limit reached")){
+                    receivedMessage = "Rate limit reached";
+                }
             }
-            log.warn("消息发送异常，当前已接收消息：{}，响应内容：{}，异常堆栈：", receivedMessage, responseStr, t);
+            log.warn("消息发送异常，当前已接收消息：{}，响应内容：{}，异常堆栈：{}", receivedMessage, responseStr, t);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

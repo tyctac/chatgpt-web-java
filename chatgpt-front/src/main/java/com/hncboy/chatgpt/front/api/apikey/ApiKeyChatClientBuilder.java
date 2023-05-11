@@ -5,14 +5,23 @@ import com.hncboy.chatgpt.base.config.ChatConfig;
 import com.hncboy.chatgpt.base.enums.ApiTypeEnum;
 import com.hncboy.chatgpt.base.util.OkHttpClientUtil;
 import com.unfbx.chatgpt.OpenAiStreamClient;
+import com.unfbx.chatgpt.entity.billing.BillingUsage;
+import com.unfbx.chatgpt.entity.billing.CreditGrantsResponse;
+import com.unfbx.chatgpt.entity.billing.Subscription;
 import com.unfbx.chatgpt.function.KeyRandomStrategy;
+import jdk.jshell.JShell;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
 
 import java.net.InetSocketAddress;
 import java.net.Proxy;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author hncboy
@@ -45,11 +54,12 @@ public class ApiKeyChatClientBuilder {
                 .builder()
                 .apiHost(chatConfig.getOpenaiApiBaseUrl())
                 .keyStrategy(new KeyRandomStrategy())
-                .apiKey(Collections.singletonList(chatConfig.getOpenaiApiKey()))
+                //.apiKey(Collections.singletonList(chatConfig.getOpenaiApiKey()))
+                .apiKey(splitString(chatConfig.getOpenaiApiKey(),","))
                 .okHttpClient(okHttpClient)
                 .build();
         log.info("api key is here========> " + oas.getApiKey());
-
+        subscription(oas);
         return oas;
 //        return OpenAiStreamClient.builder()
 //                .apiKey(Collections.singletonList(chatConfig.getOpenaiApiKey()))
@@ -57,6 +67,33 @@ public class ApiKeyChatClientBuilder {
 //                .apiHost(chatConfig.getOpenaiApiBaseUrl())
 //                .build();
     }
+
+
+
+    private void subscription(OpenAiStreamClient client ){
+        Subscription subs = client.subscription();
+        log.info("用户名：{}", subs.getAccountName());
+        log.info("用户总余额（美元）：{}", subs.getHardLimitUsd());
+        log.info("更多信息看------------>Subscription类");
+
+        LocalDate start = LocalDate.of(2023, 3, 7);
+        BillingUsage billingUsage = client.billingUsage(start, LocalDate.now());
+        log.info("总使用金额（美分）：{}", billingUsage.getTotalUsage());
+        log.info("更多信息看----------->BillingUsage类");
+
+//        CreditGrantsResponse creditGrantsResponse = client.creditGrants();
+//        log.info("账户总余额（美元）：{}", creditGrantsResponse.getTotalGranted());
+//        log.info("账户总使用金额（美元）：{}", creditGrantsResponse.getTotalUsed());
+//        log.info("账户总剩余金额（美元）：{}", creditGrantsResponse.getTotalAvailable());
+
+    }
+
+    private List<String> splitString(String str, String delimiter) {
+        // Split the string using the specified delimiter and convert it to a list
+        return Arrays.stream(str.split(delimiter))
+                .collect(Collectors.toList());
+    }
+
 
     /**
      * 获取 Proxy
