@@ -94,6 +94,59 @@ public class ApiKeyResponseEmitter implements ResponseEmitter {
         return emitter;
     }
 
+
+    @Override
+    public ResponseBodyEmitter requestToResponseEmitter4(ChatProcessRequest chatProcessRequest, ResponseBodyEmitter emitter) {
+        // 初始化聊天消息
+        ChatMessageDO chatMessageDO = chatMessageService.initChatMessage(chatProcessRequest, ApiTypeEnum.API_KEY);
+
+        // 所有消息
+        LinkedList<Message> messages = new LinkedList<>();
+        // TODO 需要包含上下文 tokens 计算
+        // 添加用户上下文消息
+        addContextChatMessage(chatMessageDO, messages);
+
+        // 系统角色消息
+        if (StrUtil.isNotBlank(chatProcessRequest.getSystemMessage())) {
+            // 系统消息
+            Message systemMessage = Message.builder()
+                    .role(Message.Role.SYSTEM)
+                    .content(chatProcessRequest.getSystemMessage())
+                    .build();
+            messages.addFirst(systemMessage);
+        }
+
+        // 构建聊天参数
+        ChatCompletion chatCompletion = ChatCompletion.builder()
+                .maxTokens(1000)
+                //.model(chatConfig.getOpenaiApiModel())
+                .model("gpt-4")
+
+                // [0, 2] 越低越精准
+                .temperature(0.8)
+                .topP(1.0)
+                // 每次生成一条
+                .n(1)
+                .presencePenalty(1)
+                .messages(messages)
+                .stream(true)
+                .build();
+
+        // 构建事件监听器
+        ParsedEventSourceListener parsedEventSourceListener = new ParsedEventSourceListener.Builder()
+//                .addListener(new ConsoleStreamListener())
+                .addListener(new ResponseBodyEmitterStreamListener(emitter))
+                .setParser(parser)
+                .setDataStorage(dataStorage)
+                .setOriginalRequestData(ObjectMapperUtil.toJson(chatCompletion))
+                .setChatMessageDO(chatMessageDO)
+                .build();
+
+        ApiKeyChatClientBuilder.buildOpenAiStreamClient().streamChatCompletion(chatCompletion, parsedEventSourceListener);
+        return emitter;
+    }
+
+
     /**
      * 添加上下文问题消息
      *

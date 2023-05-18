@@ -76,6 +76,38 @@ public class AccessTokenResponseEmitter implements ResponseEmitter {
         return emitter;
     }
 
+
+
+    @Override
+    public ResponseBodyEmitter requestToResponseEmitter4(ChatProcessRequest chatProcessRequest, ResponseBodyEmitter emitter) {
+        // 构建 accessTokenApiClient
+        log.info("access token is here====>", chatConfig.getOpenaiAccessToken());
+        AccessTokenApiClient accessTokenApiClient = AccessTokenApiClient.builder()
+                .accessToken(chatConfig.getOpenaiAccessToken())
+                .reverseProxy(chatConfig.getApiReverseProxy())
+                .model(chatConfig.getOpenaiApiModel())
+                .build();
+
+        // 初始化聊天消息
+        ChatMessageDO chatMessageDO = chatMessageService.initChatMessage(chatProcessRequest, ApiTypeEnum.ACCESS_TOKEN);
+
+        // 构建 ConversationRequest
+        ConversationRequest conversationRequest = buildConversationRequest(chatMessageDO);
+
+        // 构建事件监听器
+        ParsedEventSourceListener parsedEventSourceListener = new ParsedEventSourceListener.Builder()
+//                .addListener(new ConsoleStreamListener())
+                .addListener(new ResponseBodyEmitterStreamListener(emitter))
+                .setParser(parser)
+                .setDataStorage(dataStorage)
+                .setOriginalRequestData(ObjectMapperUtil.toJson(conversationRequest))
+                .setChatMessageDO(chatMessageDO)
+                .build();
+
+        // 发送请求
+        accessTokenApiClient.streamChatCompletions(conversationRequest, parsedEventSourceListener);
+        return emitter;
+    }
     /**
      * 构建 ConversationRequest
      *

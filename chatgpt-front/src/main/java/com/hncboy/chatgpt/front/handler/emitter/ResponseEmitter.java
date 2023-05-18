@@ -18,4 +18,7 @@ public interface ResponseEmitter {
      * @return ResponseBodyEmitter
      */
     ResponseBodyEmitter requestToResponseEmitter(ChatProcessRequest chatProcessRequest, ResponseBodyEmitter emitter);
+
+    ResponseBodyEmitter requestToResponseEmitter4(ChatProcessRequest chatProcessRequest, ResponseBodyEmitter emitter);
+
 }

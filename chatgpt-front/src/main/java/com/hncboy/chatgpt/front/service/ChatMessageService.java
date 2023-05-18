@@ -22,6 +22,15 @@ public interface ChatMessageService extends IService<ChatMessageDO> {
     ResponseBodyEmitter sendMessage(ChatProcessRequest chatProcessRequest);
 
     /**
+     * 消息处理
+     *
+     * @param chatProcessRequest 消息处理请求参数
+     * @return emitter
+     */
+    ResponseBodyEmitter sendMessage4(ChatProcessRequest chatProcessRequest);
+
+
+    /**
      * 初始化聊天消息
      *
      * @param chatProcessRequest 消息处理请求参数
