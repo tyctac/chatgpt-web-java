@@ -59,7 +59,8 @@ public class ApiKeyChatClientBuilder {
                 .okHttpClient(okHttpClient)
                 .build();
         log.info("api key is here========> " + oas.getApiKey());
-        //subscription(oas);
+        log.info("api model is here========> " + chatConfig.getOpenaiApiModel().toString());
+        subscription(oas);
         return oas;
 //        return OpenAiStreamClient.builder()
 //                .apiKey(Collections.singletonList(chatConfig.getOpenaiApiKey()))

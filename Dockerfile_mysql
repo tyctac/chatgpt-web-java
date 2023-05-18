@@ -18,6 +18,8 @@ EXPOSE 3306
 
 # 设置MySQL root的密码
 ENV MYSQL_ROOT_PASSWORD=123456
+ENV MYSQL_ROOT_HOST=%   
+##  new add local
 
 # 健康检查
 HEALTHCHECK --interval=5s --timeout=3s \

@@ -2,8 +2,9 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${MYSQL_USER_NAME:root}
-    password: ${MYSQL_PASSWORD:123456}
-    url: ${JDBC_URL:jdbc:mysql://localhost:3309/chat?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false&allowPublicKeyRetrieval=true}
+    password: ${MYSQL_PASSWORD:lzwdbpswd}
+    url: jdbc:mysql://localhost:3306/chat?serverTimezone=UTC
+    #url: ${JDBC_URL:jdbc:mysql://localhost:3309/chat?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false&allowPublicKeyRetrieval=true}
 
 #mybatis-plus:
 #  configuration:
@@ -11,13 +12,13 @@ spring:
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 chat:
-  # OpenAI API Key - https://platform.openai.com/overview
+  # OpenAI API Key - https://platform.openai.com/overview    sk-pe1c8bzyj7N4mv2X
   openai_api_key: ${CHAT_OPENAI_API_KEY:}
   # change this to an `accessToken` extracted from the ChatGPT site's `https://chat.openai.com/api/auth/session` response
   openai_access_token: ${CHAT_OPENAI_ACCESS_TOKEN:}
   # OpenAI API Base URL - https://api.openai.com/，要加/后缀
   openai_api_base_url: ${CHAT_OPENAI_API_BASE_URL:https://api.openai.com/}
-  # API Model - https://platform.openai.com/docs/models apiKey 和 AccessToken mode 不一样
+  # API Model - https://platform.openai.com/docs/models apiKey 和 AccessToken mode 不一样        gpt-4-32k-0314   gpt-4
   openai_api_model: ${CHAT_OPENAI_API_MODEL:}
   # 反向代理地址 AccessToken 时使用
   api_reverse_proxy: ${CHAT_API_REVERSE_PROXY:}
