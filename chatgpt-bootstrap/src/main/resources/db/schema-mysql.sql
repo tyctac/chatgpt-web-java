@@ -7,7 +7,7 @@ USE chat;
 CREATE TABLE IF NOT EXISTS `account_balance`  (
    `user_id` bigint NOT NULL COMMENT '用户 id,主键',
    `token_left` int NOT NULL COMMENT 'gpt4 token left',
-    PRIMARY KEY (`user_id`) USING BTREE,
+    PRIMARY KEY (`user_id`) USING BTREE
     ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = 'user account token left' ROW_FORMAT = Dynamic;
 
 CREATE TABLE IF NOT EXISTS `chat_message`  (
