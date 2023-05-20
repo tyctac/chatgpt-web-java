@@ -1,0 +1,144 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.0.5)
+
+2023-05-12T03:32:37.073+09:00  INFO 7 --- [           main] com.hncboy.chatgpt.ChatGptApplication    : Starting ChatGptApplication v1.0.2 using Java 17.0.2 with PID 7 (/app/app.jar started by root in /app)
+2023-05-12T03:32:37.081+09:00  INFO 7 --- [           main] com.hncboy.chatgpt.ChatGptApplication    : The following 1 profile is active: "dev"
+2023-05-12T03:32:39.572+09:00  INFO 7 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 3002 (http)
+2023-05-12T03:32:39.583+09:00  INFO 7 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-05-12T03:32:39.583+09:00  INFO 7 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.7]
+2023-05-12T03:32:39.672+09:00  INFO 7 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-05-12T03:32:39.674+09:00  INFO 7 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2468 ms
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.3.1 
+2023-05-12T03:32:40.859+09:00  INFO 7 --- [           main] c.h.c.b.service.impl.EmailServiceImpl    : 初始化邮箱账号完毕，配置信息为：EmailConfig(host=smtp.163.com, port=465, from=13051103518@163.com, user=13051103518@163.com, pass=DWYCBKPXSMHCJFKX, auth=true, verificationRedirectUrl=http://localhost:1002/#/emailValidation?type=email&verifyCode=, verifyCodeExpireMinutes=15) 
+____ ____    ___ ____ _  _ ____ _  _ 
+[__  |__| __  |  |  | |_/  |___ |\ | 
+___] |  |     |  |__| | \_ |___ | \| 
+https://sa-token.cc (v1.34.0)
+2023-05-12T03:32:41.858+09:00  INFO 7 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 3002 (http) with context path ''
+2023-05-12T03:32:41.877+09:00  INFO 7 --- [           main] com.hncboy.chatgpt.ChatGptApplication    : Started ChatGptApplication in 5.43 seconds (process running for 6.069)
+2023-05-12T03:32:48.168+09:00  INFO 7 --- [nio-3002-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-05-12T03:32:48.168+09:00  INFO 7 --- [nio-3002-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-05-12T03:32:48.170+09:00  INFO 7 --- [nio-3002-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2023-05-12T03:32:48.678+09:00  WARN 7 --- [nio-3002-exec-1] c.h.c.base.handler.SensitiveWordHandler  : 开始构建敏感词树
+2023-05-12T03:32:48.690+09:00  WARN 7 --- [nio-3002-exec-1] c.b.m.c.t.support.ReflectLambdaMeta      : Unable to make field private final java.lang.Class java.lang.invoke.SerializedLambda.capturingClass accessible: module java.base does not "opens java.lang.invoke" to unnamed module @2a18f23c
+2023-05-12T03:32:48.774+09:00  INFO 7 --- [nio-3002-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-05-12T03:32:49.164+09:00  INFO 7 --- [nio-3002-exec-1] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7ed6883a
+2023-05-12T03:32:49.167+09:00  INFO 7 --- [nio-3002-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-05-12T03:32:49.221+09:00  WARN 7 --- [nio-3002-exec-1] c.h.c.base.handler.SensitiveWordHandler  : 查询数据库，敏感词数量为：0 个
+2023-05-12T03:32:49.577+09:00  INFO 7 --- [nio-3002-exec-1] c.h.c.f.a.a.ApiKeyChatClientBuilder      : api key is here===> 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
+2023-05-12T03:32:49.579+09:00  INFO 7 --- [nio-3002-exec-1] c.h.c.f.a.a.ApiKeyChatClientBuilder      : api key is here===> http://api.openai.com/
+2023-05-12T03:32:49.661+09:00  INFO 7 --- [nio-3002-exec-1] c.h.c.f.a.a.ApiKeyChatClientBuilder      : api key is here========> [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]
+2023-05-12T03:32:50.074+09:00  WARN 7 --- [.openai.com/...] c.h.c.f.a.l.ParsedEventSourceListener    : 消息发送异常，当前已接收消息：，响应内容：{
+    "error": {
+        "message": "You didn't provide an API key. You need to provide your API key in an Authorization header using Bearer auth (i.e. Authorization: Bearer YOUR_KEY), or as the password field (with blank username) if you're accessing the API from your browser and are prompted for a username and password. You can obtain an API key from https://platform.openai.com/account/api-keys.",
+        "type": "invalid_request_error",
+        "param": null,
+        "code": null
+    }
+}
+，异常堆栈：null
+2023-05-12T03:35:35.377+09:00  INFO 7 --- [nio-3002-exec-5] c.h.c.f.a.a.ApiKeyChatClientBuilder      : api key is here===> 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
+2023-05-12T03:35:35.378+09:00  INFO 7 --- [nio-3002-exec-5] c.h.c.f.a.a.ApiKeyChatClientBuilder      : api key is here===> http://api.openai.com/
+2023-05-12T03:35:35.378+09:00  INFO 7 --- [nio-3002-exec-5] c.h.c.f.a.a.ApiKeyChatClientBuilder      : api key is here========> [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]
+2023-05-12T03:35:35.542+09:00  WARN 7 --- [.openai.com/...] c.h.c.f.a.l.ParsedEventSourceListener    : 消息发送异常，当前已接收消息：，响应内容：{
+    "error": {
+        "message": "You didn't provide an API key. You need to provide your API key in an Authorization header using Bearer auth (i.e. Authorization: Bearer YOUR_KEY), or as the password field (with blank username) if you're accessing the API from your browser and are prompted for a username and password. You can obtain an API key from https://platform.openai.com/account/api-keys.",
+        "type": "invalid_request_error",
+        "param": null,
+        "code": null
+    }
+}
+，异常堆栈：null
+2023-05-12T03:37:43.888+09:00 ERROR 7 --- [nio-3002-exec-7] c.h.c.b.e.RestExceptionTranslator        : 业务异常
+
+com.hncboy.chatgpt.base.exception.ServiceException: 账号或密码错误
+	at com.hncboy.chatgpt.front.service.strategy.user.EmailAbstractRegisterStrategy.login(EmailAbstractRegisterStrategy.java:170) ~[chatgpt-front-1.0.2.jar!/:1.0.2]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:343) ~[spring-aop-6.0.7.jar!/:6.0.7]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.0.7.jar!/:6.0.7]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.0.7.jar!/:6.0.7]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:750) ~[spring-aop-6.0.7.jar!/:6.0.7]
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:123) ~[spring-tx-6.0.7.jar!/:6.0.7]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:391) ~[spring-tx-6.0.7.jar!/:6.0.7]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.0.7.jar!/:6.0.7]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.0.7.jar!/:6.0.7]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:750) ~[spring-aop-6.0.7.jar!/:6.0.7]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:702) ~[spring-aop-6.0.7.jar!/:6.0.7]
+	at com.hncboy.chatgpt.front.service.strategy.user.EmailAbstractRegisterStrategy$$SpringCGLIB$$0.login(<generated>) ~[chatgpt-front-1.0.2.jar!/:1.0.2]
+	at com.hncboy.chatgpt.front.service.impl.FrontUserServiceImpl.login(FrontUserServiceImpl.java:40) ~[chatgpt-front-1.0.2.jar!/:1.0.2]
+	at com.hncboy.chatgpt.front.controller.FrontUserController.login(FrontUserController.java:65) ~[chatgpt-front-1.0.2.jar!/:1.0.2]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:207) ~[spring-web-6.0.7.jar!/:6.0.7]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:152) ~[spring-web-6.0.7.jar!/:6.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.0.7.jar!/:6.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:884) ~[spring-webmvc-6.0.7.jar!/:6.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:797) ~[spring-webmvc-6.0.7.jar!/:6.0.7]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.0.7.jar!/:6.0.7]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1081) ~[spring-webmvc-6.0.7.jar!/:6.0.7]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:974) ~[spring-webmvc-6.0.7.jar!/:6.0.7]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1011) ~[spring-webmvc-6.0.7.jar!/:6.0.7]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914) ~[spring-webmvc-6.0.7.jar!/:6.0.7]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:563) ~[tomcat-embed-core-10.1.7.jar!/:6.0.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.0.7.jar!/:6.0.7]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:631) ~[tomcat-embed-core-10.1.7.jar!/:6.0.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:205) ~[tomcat-embed-core-10.1.7.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.7.jar!/:na]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-10.1.7.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.7.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.7.jar!/:na]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.0.7.jar!/:6.0.7]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.0.7.jar!/:6.0.7]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.7.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.7.jar!/:na]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.0.7.jar!/:6.0.7]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.0.7.jar!/:6.0.7]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.7.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.7.jar!/:na]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.0.7.jar!/:6.0.7]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.0.7.jar!/:6.0.7]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.7.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.7.jar!/:na]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:166) ~[tomcat-embed-core-10.1.7.jar!/:na]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.7.jar!/:na]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:493) ~[tomcat-embed-core-10.1.7.jar!/:na]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.7.jar!/:na]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.7.jar!/:na]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.7.jar!/:na]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341) ~[tomcat-embed-core-10.1.7.jar!/:na]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:390) ~[tomcat-embed-core-10.1.7.jar!/:na]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.7.jar!/:na]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:894) ~[tomcat-embed-core-10.1.7.jar!/:na]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741) ~[tomcat-embed-core-10.1.7.jar!/:na]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.7.jar!/:na]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.7.jar!/:na]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.7.jar!/:na]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.7.jar!/:na]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+
+2023-05-12T03:38:03.013+09:00  INFO 7 --- [nio-3002-exec-9] c.h.c.f.a.a.ApiKeyChatClientBuilder      : api key is here===> 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
+2023-05-12T03:38:03.014+09:00  INFO 7 --- [nio-3002-exec-9] c.h.c.f.a.a.ApiKeyChatClientBuilder      : api key is here===> http://api.openai.com/
+2023-05-12T03:38:03.015+09:00  INFO 7 --- [nio-3002-exec-9] c.h.c.f.a.a.ApiKeyChatClientBuilder      : api key is here========> [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]
+2023-05-12T03:38:03.187+09:00  WARN 7 --- [.openai.com/...] c.h.c.f.a.l.ParsedEventSourceListener    : 消息发送异常，当前已接收消息：，响应内容：{
+    "error": {
+        "message": "You didn't provide an API key. You need to provide your API key in an Authorization header using Bearer auth (i.e. Authorization: Bearer YOUR_KEY), or as the password field (with blank username) if you're accessing the API from your browser and are prompted for a username and password. You can obtain an API key from https://platform.openai.com/account/api-keys.",
+        "type": "invalid_request_error",
+        "param": null,
+        "code": null
+    }
+}
+，异常堆栈：null
