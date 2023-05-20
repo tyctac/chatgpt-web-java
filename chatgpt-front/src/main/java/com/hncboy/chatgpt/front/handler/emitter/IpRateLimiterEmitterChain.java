@@ -40,3 +40,7 @@ public class IpRateLimiterEmitterChain extends AbstractResponseEmitterChain {
         }
     }
 }
+
+/*
+INSERT INTO `chat`.`account_balance`(`userid`, `token_left`) VALUES (8, 1000);
+ */

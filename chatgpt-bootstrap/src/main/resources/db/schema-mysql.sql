@@ -5,6 +5,12 @@ CREATE DATABASE IF NOT EXISTS chat DEFAULT CHARACTER SET utf8;
 USE chat;
 
 CREATE TABLE IF NOT EXISTS `chat_message`  (
+   `user_id` bigint NOT NULL COMMENT '用户 id,主键',
+   `token_left` int NOT NULL COMMENT 'gpt4 token left',
+    PRIMARY KEY (`user_id`) USING BTREE,
+    ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = 'user account token left' ROW_FORMAT = Dynamic;
+
+CREATE TABLE IF NOT EXISTS `chat_message`  (
     `id` bigint NOT NULL COMMENT '主键',
     `user_id` int NOT NULL COMMENT '用户 id',
     `message_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '消息 id',

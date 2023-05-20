@@ -9,7 +9,7 @@ import com.hncboy.chatgpt.base.enums.ChatMessageStatusEnum;
 import com.hncboy.chatgpt.base.enums.ChatMessageTypeEnum;
 import com.hncboy.chatgpt.base.util.ObjectMapperUtil;
 import com.hncboy.chatgpt.front.api.apikey.ApiKeyChatClientBuilder;
-import com.hncboy.chatgpt.front.api.listener.ConsoleStreamListener;
+import com.hncboy.chatgpt.front.api.apikey.ApiKeyChatClientBuilder4;
 import com.hncboy.chatgpt.front.api.listener.ParsedEventSourceListener;
 import com.hncboy.chatgpt.front.api.listener.ResponseBodyEmitterStreamListener;
 import com.hncboy.chatgpt.front.api.parser.ChatCompletionResponseParser;
@@ -48,7 +48,7 @@ public class ApiKeyResponseEmitter implements ResponseEmitter {
     @Override
     public ResponseBodyEmitter requestToResponseEmitter(ChatProcessRequest chatProcessRequest, ResponseBodyEmitter emitter) {
         // 初始化聊天消息
-        ChatMessageDO chatMessageDO = chatMessageService.initChatMessage(chatProcessRequest, ApiTypeEnum.API_KEY);
+        ChatMessageDO chatMessageDO = chatMessageService.initChatMessage(chatProcessRequest, ApiTypeEnum.API_KEY, true);
 
         // 所有消息
         LinkedList<Message> messages = new LinkedList<>();
@@ -69,7 +69,7 @@ public class ApiKeyResponseEmitter implements ResponseEmitter {
         // 构建聊天参数
         ChatCompletion chatCompletion = ChatCompletion.builder()
                 .maxTokens(1000)
-                .model(chatConfig.getOpenaiApiModel())
+                .model("gpt-3.5-turbo")  //chatConfig.getOpenaiApiModel()
                 // [0, 2] 越低越精准
                 .temperature(0.8)
                 .topP(1.0)
@@ -98,7 +98,7 @@ public class ApiKeyResponseEmitter implements ResponseEmitter {
     @Override
     public ResponseBodyEmitter requestToResponseEmitter4(ChatProcessRequest chatProcessRequest, ResponseBodyEmitter emitter) {
         // 初始化聊天消息
-        ChatMessageDO chatMessageDO = chatMessageService.initChatMessage(chatProcessRequest, ApiTypeEnum.API_KEY);
+        ChatMessageDO chatMessageDO = chatMessageService.initChatMessage(chatProcessRequest, ApiTypeEnum.API_KEY, false);
 
         // 所有消息
         LinkedList<Message> messages = new LinkedList<>();
@@ -120,7 +120,7 @@ public class ApiKeyResponseEmitter implements ResponseEmitter {
         ChatCompletion chatCompletion = ChatCompletion.builder()
                 .maxTokens(1000)
                 //.model(chatConfig.getOpenaiApiModel())
-                .model("gpt-4")
+                .model("gpt-4")  //
 
                 // [0, 2] 越低越精准
                 .temperature(0.8)
@@ -142,7 +142,7 @@ public class ApiKeyResponseEmitter implements ResponseEmitter {
                 .setChatMessageDO(chatMessageDO)
                 .build();
 
-        ApiKeyChatClientBuilder.buildOpenAiStreamClient().streamChatCompletion(chatCompletion, parsedEventSourceListener);
+        ApiKeyChatClientBuilder4.buildOpenAiStreamClient().streamChatCompletion(chatCompletion, parsedEventSourceListener);
         return emitter;
     }
 

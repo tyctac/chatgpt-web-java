@@ -37,12 +37,13 @@ public class ChatMessageController {
         return chatMessageService.sendMessage(chatProcessRequest);
     }
 
-    @Operation(summary = "发送消息")
+    @Operation(summary = "发送消息4")
     @PostMapping("/send4")
     public ResponseBodyEmitter sendMessage4(@RequestBody @Validated ChatProcessRequest chatProcessRequest, HttpServletResponse response) {
         // TODO 后续调整
         chatProcessRequest.setSystemMessage("You are ChatGPT, a large language model trained by OpenAI. Answer as concisely as possible.\\nKnowledge cutoff: 2021-09-01\\nCurrent date: ".concat(DateUtil.today()));
         response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
-        return chatMessageService.sendMessage(chatProcessRequest);
+        return chatMessageService.sendMessage4(chatProcessRequest);
+        //FrontUserUtil 
     }
 }

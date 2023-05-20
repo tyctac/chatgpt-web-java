@@ -37,5 +37,5 @@ public interface ChatMessageService extends IService<ChatMessageDO> {
      * @param apiTypeEnum        API 类型
      * @return 聊天消息
      */
-    ChatMessageDO initChatMessage(ChatProcessRequest chatProcessRequest, ApiTypeEnum apiTypeEnum);
+    ChatMessageDO initChatMessage(ChatProcessRequest chatProcessRequest, ApiTypeEnum apiTypeEnum, boolean isModel3);
 }

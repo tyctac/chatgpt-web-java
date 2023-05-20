@@ -27,6 +27,11 @@ public class ChatConfig implements InitializingBean {
      */
     private String openaiApiKey;
 
+
+    private String openaiApiKey3;
+
+    private String openaiApiKey4;
+
     /**
      * OpenAI Access Token - https://beta.openai.com/docs/api-reference/authentication
      * Change this to an `accessToken` extracted from the ChatGPT site's `https://chat.openai.com/api/auth/session` response

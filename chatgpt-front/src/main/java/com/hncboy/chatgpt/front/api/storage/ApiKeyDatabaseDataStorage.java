@@ -1,8 +1,13 @@
 package com.hncboy.chatgpt.front.api.storage;
 
 import cn.hutool.core.util.StrUtil;
+import com.hncboy.chatgpt.base.domain.entity.AccountBalanceDO;
 import com.hncboy.chatgpt.base.domain.entity.ChatMessageDO;
+import com.hncboy.chatgpt.base.service.AccountBalanceService;
+import com.hncboy.chatgpt.front.util.FrontUserUtil;
 import com.unfbx.chatgpt.utils.TikTokensUtil;
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -12,8 +17,12 @@ import java.util.UUID;
  * @date 2023/3/25 22:52
  * ApiKey 数据库数据存储
  */
+@Slf4j
 @Component
 public class ApiKeyDatabaseDataStorage extends AbstractDatabaseDataStorage {
+
+    @Resource
+    private AccountBalanceService accountBalanceService;
 
     @Override
     public void onFirstMessage(ChatMessageStorage chatMessageStorage) {
@@ -46,6 +55,7 @@ public class ApiKeyDatabaseDataStorage extends AbstractDatabaseDataStorage {
         // 获取问题消耗的 tokens
         int promptTokens = TikTokensUtil.tokens(modelName, questionChatMessageDO.getContent());
 
+
         // 获取回答消耗的 tokens
         ChatMessageDO answerChatMessageDO = chatMessageStorage.getAnswerChatMessageDO();
         String answerContent = answerChatMessageDO.getContent();
@@ -60,5 +70,16 @@ public class ApiKeyDatabaseDataStorage extends AbstractDatabaseDataStorage {
         questionChatMessageDO.setPromptTokens(promptTokens);
         questionChatMessageDO.setCompletionTokens(completionTokens);
         questionChatMessageDO.setTotalTokens(totalTokens);
+
+        log.error("model type is here " + questionChatMessageDO.getModelName());
+
+        // count token left
+        if (questionChatMessageDO.getModelName() == "gpt-4"){
+            AccountBalanceDO accountBalanceDO = accountBalanceService.getAccountBalanceByid(questionChatMessageDO.getUserId());
+            Integer tokenLeft = accountBalanceDO.getTokenLeft() - completionTokens;
+            accountBalanceDO.setTokenLeft(tokenLeft);
+            accountBalanceService.updateById(accountBalanceDO);
+        }
+
     }
 }

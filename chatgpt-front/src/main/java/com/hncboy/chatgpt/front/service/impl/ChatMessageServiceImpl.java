@@ -5,12 +5,15 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hncboy.chatgpt.base.config.ChatConfig;
+import com.hncboy.chatgpt.base.domain.entity.AccountBalanceDO;
 import com.hncboy.chatgpt.base.domain.entity.ChatMessageDO;
 import com.hncboy.chatgpt.base.domain.entity.ChatRoomDO;
+import com.hncboy.chatgpt.base.domain.entity.EmailVerifyCodeDO;
 import com.hncboy.chatgpt.base.enums.ApiTypeEnum;
 import com.hncboy.chatgpt.base.enums.ChatMessageStatusEnum;
 import com.hncboy.chatgpt.base.enums.ChatMessageTypeEnum;
 import com.hncboy.chatgpt.base.exception.ServiceException;
+import com.hncboy.chatgpt.base.service.AccountBalanceService;
 import com.hncboy.chatgpt.base.util.ObjectMapperUtil;
 import com.hncboy.chatgpt.base.util.WebUtil;
 import com.hncboy.chatgpt.front.domain.request.ChatProcessRequest;
@@ -45,6 +48,9 @@ public class ChatMessageServiceImpl extends ServiceImpl<ChatMessageMapper, ChatM
     @Resource
     private ChatRoomService chatRoomService;
 
+    @Resource
+    private AccountBalanceService accountBalanceService;
+
     @Override
     public ResponseBodyEmitter sendMessage(ChatProcessRequest chatProcessRequest) {
         // 超时时间设置 3 分钟
@@ -69,29 +75,49 @@ public class ChatMessageServiceImpl extends ServiceImpl<ChatMessageMapper, ChatM
         emitter.onTimeout(() -> log.error("请求参数：{}，Back-end closed the emitter connection.", ObjectMapperUtil.toJson(chatProcessRequest)));
 
         // 构建 emitter 处理链路
+        // lzw ResponseEmitterChain accountBalanceEmitterChain = new AccountBalanceEmitterChain();
         ResponseEmitterChain ipRateLimiterEmitterChain = new IpRateLimiterEmitterChain();
         ResponseEmitterChain sensitiveWordEmitterChain = new SensitiveWordEmitterChain();
         sensitiveWordEmitterChain.setNext(new ChatMessageEmitterChain4());
         ipRateLimiterEmitterChain.setNext(sensitiveWordEmitterChain);
+        //lzw accountBalanceEmitterChain.setNext(ipRateLimiterEmitterChain);
+        //lzw accountBalanceEmitterChain.doChain(chatProcessRequest, emitter);
         ipRateLimiterEmitterChain.doChain(chatProcessRequest, emitter);
         return emitter;
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public ChatMessageDO initChatMessage(ChatProcessRequest chatProcessRequest, ApiTypeEnum apiTypeEnum) {
+    public ChatMessageDO initChatMessage(ChatProcessRequest chatProcessRequest, ApiTypeEnum apiTypeEnum, boolean isModel3) {
         ChatMessageDO chatMessageDO = new ChatMessageDO();
+//        AccountBalanceDO accountBalance =
+        AccountBalanceDO accountBalanceDO = accountBalanceService.getAccountBalanceByid(FrontUserUtil.getUserId());
+        Integer tokenLeft = accountBalanceDO.getTokenLeft();
+        if (isModel3 == false && tokenLeft < 0){
+            throw new ServiceException("余额不足");
+        }
+
         chatMessageDO.setId(IdWorker.getId());
         // 消息 id 手动生成
         chatMessageDO.setMessageId(UUID.randomUUID().toString());
         chatMessageDO.setMessageType(ChatMessageTypeEnum.QUESTION);
         chatMessageDO.setApiType(apiTypeEnum);
         if (apiTypeEnum == ApiTypeEnum.API_KEY) {
-            chatMessageDO.setApiKey(chatConfig.getOpenaiApiKey());
+            if (isModel3) {
+                chatMessageDO.setApiKey(chatConfig.getOpenaiApiKey3());
+            }else {
+                chatMessageDO.setApiKey(chatConfig.getOpenaiApiKey4());
+
+            }
         }
         chatMessageDO.setUserId(FrontUserUtil.getUserId());
         chatMessageDO.setContent(chatProcessRequest.getPrompt());
-        chatMessageDO.setModelName(chatConfig.getOpenaiApiModel());
+        if (isModel3) {
+            chatMessageDO.setModelName("gpt-3.5-turbo");  //chatConfig.getOpenaiApiModel()
+        }
+        else {
+            chatMessageDO.setModelName("gpt-4");  //chatConfig.getOpenaiApiModel()
+        }
         chatMessageDO.setOriginalData(null);
         chatMessageDO.setPromptTokens(-1);
         chatMessageDO.setCompletionTokens(-1);

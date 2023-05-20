@@ -1,13 +1,16 @@
 package com.hncboy.chatgpt.front.api.storage;
 
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.hncboy.chatgpt.base.domain.entity.AccountBalanceDO;
 import com.hncboy.chatgpt.base.domain.entity.ChatMessageDO;
 import com.hncboy.chatgpt.base.domain.entity.ChatRoomDO;
 import com.hncboy.chatgpt.base.enums.ChatMessageStatusEnum;
 import com.hncboy.chatgpt.base.enums.ChatMessageTypeEnum;
+import com.hncboy.chatgpt.base.service.AccountBalanceService;
 import com.hncboy.chatgpt.front.service.ChatMessageService;
 import com.hncboy.chatgpt.front.service.ChatRoomService;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
 
@@ -16,6 +19,7 @@ import java.util.Date;
  * @date 2023/3/25 17:11
  * 数据库数据存储抽象类
  */
+@Slf4j
 public abstract class AbstractDatabaseDataStorage implements DataStorage {
 
     @Resource
@@ -23,6 +27,9 @@ public abstract class AbstractDatabaseDataStorage implements DataStorage {
 
     @Resource
     protected ChatRoomService chatRoomService;
+
+    @Resource
+    protected  AccountBalanceService accountBalanceService;
 
     @Override
     public void onMessage(ChatMessageStorage chatMessageStorage) {
@@ -60,6 +67,12 @@ public abstract class AbstractDatabaseDataStorage implements DataStorage {
         chatRoomService.update(new LambdaUpdateWrapper<ChatRoomDO>()
                 .set(ChatRoomDO::getConversationId, answerChatMessageDO.getConversationId())
                 .eq(ChatRoomDO::getId, answerChatMessageDO.getChatRoomId()));
+
+//        AccountBalanceDO accountBalanceDO = accountBalanceService.getAccountBalanceByid(questionChatMessageDO.getUserId());
+//        Integer tokenLeft = accountBalanceDO.getTokenLeft() - completionTokens;
+//        accountBalanceDO.setTokenLeft(tokenLeft);
+
+
     }
 
     /**

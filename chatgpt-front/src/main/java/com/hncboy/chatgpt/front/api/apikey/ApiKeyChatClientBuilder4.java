@@ -6,10 +6,8 @@ import com.hncboy.chatgpt.base.enums.ApiTypeEnum;
 import com.hncboy.chatgpt.base.util.OkHttpClientUtil;
 import com.unfbx.chatgpt.OpenAiStreamClient;
 import com.unfbx.chatgpt.entity.billing.BillingUsage;
-import com.unfbx.chatgpt.entity.billing.CreditGrantsResponse;
 import com.unfbx.chatgpt.entity.billing.Subscription;
 import com.unfbx.chatgpt.function.KeyRandomStrategy;
-import jdk.jshell.JShell;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
@@ -17,9 +15,7 @@ import okhttp3.OkHttpClient;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,7 +26,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @UtilityClass
-public class ApiKeyChatClientBuilder {
+public class ApiKeyChatClientBuilder4 {
 
     /**
      * 构建 API 流式请求客户端
@@ -48,14 +44,14 @@ public class ApiKeyChatClientBuilder {
                 getProxy()
         );
 
-        log.info("api key is here===> " + chatConfig.getOpenaiApiKey3().toString());
+        log.info("api key is here===> " + chatConfig.getOpenaiApiKey4().toString());
         log.info("api key is here===> " + chatConfig.getOpenaiApiBaseUrl().toString());
         OpenAiStreamClient oas = OpenAiStreamClient
                 .builder()
                 .apiHost(chatConfig.getOpenaiApiBaseUrl())
                 .keyStrategy(new KeyRandomStrategy())
                 //.apiKey(Collections.singletonList(chatConfig.getOpenaiApiKey()))
-                .apiKey(splitString(chatConfig.getOpenaiApiKey3(),","))
+                .apiKey(splitString(chatConfig.getOpenaiApiKey4(),","))
                 .okHttpClient(okHttpClient)
                 .build();
         log.info("api key is here========> " + oas.getApiKey());
