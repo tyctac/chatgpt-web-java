@@ -1,0 +1,4 @@
+2023-05-21 01:38:42+09:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.32-1.el8 started.
+2023-05-21 01:38:42+09:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+2023-05-21 01:38:42+09:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.32-1.el8 started.
+'/var/lib/mysql/mysql.sock' -> '/var/run/mysqld/mysqld.sock'
