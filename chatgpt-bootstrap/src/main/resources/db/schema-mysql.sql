@@ -4,7 +4,7 @@ CREATE DATABASE IF NOT EXISTS chat DEFAULT CHARACTER SET utf8;
 -- 进入 chat 库
 USE chat;
 
-CREATE TABLE IF NOT EXISTS `chat_message`  (
+CREATE TABLE IF NOT EXISTS `account_balance`  (
    `user_id` bigint NOT NULL COMMENT '用户 id,主键',
    `token_left` int NOT NULL COMMENT 'gpt4 token left',
     PRIMARY KEY (`user_id`) USING BTREE,
