@@ -76,7 +76,9 @@ public class ApiKeyDatabaseDataStorage extends AbstractDatabaseDataStorage {
         // count token left
         if (questionChatMessageDO.getModelName() == "gpt-4"){
             AccountBalanceDO accountBalanceDO = accountBalanceService.getAccountBalanceByid(questionChatMessageDO.getUserId());
-            Integer tokenLeft = accountBalanceDO.getTokenLeft() - completionTokens;
+//            Integer tokenLeft = accountBalanceDO.getTokenLeft() - completionTokens;
+            Integer tokenLeft = accountBalanceDO.getTokenLeft() - promptTokens;
+
             accountBalanceDO.setTokenLeft(tokenLeft);
             accountBalanceService.updateById(accountBalanceDO);
         }

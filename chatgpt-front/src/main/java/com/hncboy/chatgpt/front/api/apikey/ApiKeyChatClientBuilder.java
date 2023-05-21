@@ -49,7 +49,7 @@ public class ApiKeyChatClientBuilder {
         );
 
         log.info("api key is here===> " + chatConfig.getOpenaiApiKey3().toString());
-        log.info("api key is here===> " + chatConfig.getOpenaiApiBaseUrl().toString());
+        log.info("api url is here===> " + chatConfig.getOpenaiApiBaseUrl().toString());
         OpenAiStreamClient oas = OpenAiStreamClient
                 .builder()
                 .apiHost(chatConfig.getOpenaiApiBaseUrl())
