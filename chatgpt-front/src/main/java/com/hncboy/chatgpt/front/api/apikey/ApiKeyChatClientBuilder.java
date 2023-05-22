@@ -9,6 +9,7 @@ import com.unfbx.chatgpt.entity.billing.BillingUsage;
 import com.unfbx.chatgpt.entity.billing.CreditGrantsResponse;
 import com.unfbx.chatgpt.entity.billing.Subscription;
 import com.unfbx.chatgpt.function.KeyRandomStrategy;
+import com.unfbx.chatgpt.interceptor.DynamicKeyOpenAiAuthInterceptor;
 import jdk.jshell.JShell;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -54,6 +55,7 @@ public class ApiKeyChatClientBuilder {
                 .builder()
                 .apiHost(chatConfig.getOpenaiApiBaseUrl())
                 .keyStrategy(new KeyRandomStrategy())
+                .authInterceptor(new DynamicKeyOpenAiAuthInterceptor())
                 //.apiKey(Collections.singletonList(chatConfig.getOpenaiApiKey()))
                 .apiKey(splitString(chatConfig.getOpenaiApiKey3(),","))
                 .okHttpClient(okHttpClient)
