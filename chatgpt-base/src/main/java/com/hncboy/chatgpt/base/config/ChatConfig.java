@@ -2,14 +2,19 @@ package com.hncboy.chatgpt.base.config;
 
 import cn.hutool.core.lang.Opt;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import com.hncboy.chatgpt.base.enums.ApiTypeEnum;
 import com.hncboy.chatgpt.base.enums.ConversationModelEnum;
+import com.hncboy.chatgpt.base.util.StringUtil;
 import com.unfbx.chatgpt.entity.chat.ChatCompletion;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -17,6 +22,8 @@ import java.util.Objects;
  * @date 2023/3/22 20:36
  * 聊天配置参数
  */
+@Slf4j
+@Lazy(value=false)
 @Data
 @Component
 @ConfigurationProperties(prefix = "chat")
@@ -29,8 +36,10 @@ public class ChatConfig implements InitializingBean {
 
 
     private String openaiApiKey3;
+    private List<String> openaiApiKey3List;
 
     private String openaiApiKey4;
+    private List<String> openaiApiKey4List;
 
     /**
      * OpenAI Access Token - https://beta.openai.com/docs/api-reference/authentication
@@ -172,10 +181,12 @@ public class ChatConfig implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() {
-        if (StrUtil.isBlank(openaiApiKey) && StrUtil.isBlank(openaiAccessToken)) {
+        if (StrUtil.isBlank(openaiApiKey3) && StrUtil.isBlank(openaiApiKey4) && StrUtil.isBlank(openaiAccessToken)) {
             throw new RuntimeException("apiKey 或 accessToken 必须有值");
         }
 
+
+        log.error("after confiurationg here =====> ");
         // ApiKey
         if (getApiTypeEnum() == ApiTypeEnum.API_KEY) {
             // apiBaseUrl 必须有值
@@ -197,6 +208,10 @@ public class ChatConfig implements InitializingBean {
             throw new RuntimeException("ApiKey apiModel 填写错误");
         }
 
+        log.error("after confiurationg here =====> " + openaiApiKey3);
+        openaiApiKey3List = StringUtil.splitString(openaiApiKey3, ",");
+        log.error("after confiurationg here =====> " + openaiApiKey3List.toString());
+        openaiApiKey4List = StringUtil.splitString(openaiApiKey4, ",");
         // AccessToken
         if (getApiTypeEnum() == ApiTypeEnum.ACCESS_TOKEN) {
             // apiReverseProxy 必须有值

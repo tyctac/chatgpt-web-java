@@ -1,6 +1,7 @@
 package com.hncboy.chatgpt.front.handler.emitter;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.hncboy.chatgpt.base.config.ChatConfig;
 import com.hncboy.chatgpt.base.domain.entity.ChatMessageDO;
@@ -18,6 +19,7 @@ import com.hncboy.chatgpt.front.domain.request.ChatProcessRequest;
 import com.hncboy.chatgpt.front.service.ChatMessageService;
 import com.unfbx.chatgpt.entity.chat.ChatCompletion;
 import com.unfbx.chatgpt.entity.chat.Message;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 
@@ -25,16 +27,16 @@ import jakarta.annotation.Resource;
 import java.util.LinkedList;
 import java.util.Objects;
 
+
+
 /**
  * @author hncboy
  * @date 2023/3/24 15:51
  * ApiKey 响应处理
  */
+@Slf4j
 @Component
 public class ApiKeyResponseEmitter implements ResponseEmitter {
-
-    @Resource
-    private ChatConfig chatConfig;
 
     @Resource
     private ChatMessageService chatMessageService;
@@ -49,6 +51,7 @@ public class ApiKeyResponseEmitter implements ResponseEmitter {
     public ResponseBodyEmitter requestToResponseEmitter(ChatProcessRequest chatProcessRequest, ResponseBodyEmitter emitter) {
         // 初始化聊天消息
         ChatMessageDO chatMessageDO = chatMessageService.initChatMessage(chatProcessRequest, ApiTypeEnum.API_KEY, true);
+        ChatConfig chatConfig = SpringUtil.getBean(ChatConfig.class);
 
         // 所有消息
         LinkedList<Message> messages = new LinkedList<>();
@@ -66,6 +69,7 @@ public class ApiKeyResponseEmitter implements ResponseEmitter {
             messages.addFirst(systemMessage);
         }
 
+        chatConfig.setOpenaiApiModel("gpt-3.5-turbo");
         // 构建聊天参数
         ChatCompletion chatCompletion = ChatCompletion.builder()
                 .maxTokens(1000)
@@ -90,7 +94,9 @@ public class ApiKeyResponseEmitter implements ResponseEmitter {
                 .setChatMessageDO(chatMessageDO)
                 .build();
 
+        log.info("api model is here========> " + chatCompletion.getModel());
         ApiKeyChatClientBuilder.buildOpenAiStreamClient().streamChatCompletion(chatCompletion, parsedEventSourceListener);
+
         return emitter;
     }
 
@@ -99,7 +105,8 @@ public class ApiKeyResponseEmitter implements ResponseEmitter {
     public ResponseBodyEmitter requestToResponseEmitter4(ChatProcessRequest chatProcessRequest, ResponseBodyEmitter emitter) {
         // 初始化聊天消息
         ChatMessageDO chatMessageDO = chatMessageService.initChatMessage(chatProcessRequest, ApiTypeEnum.API_KEY, false);
-
+        ChatConfig chatConfig = SpringUtil.getBean(ChatConfig.class);
+        chatConfig.setOpenaiApiModel("gpt-4");
         // 所有消息
         LinkedList<Message> messages = new LinkedList<>();
         // TODO 需要包含上下文 tokens 计算
@@ -119,9 +126,7 @@ public class ApiKeyResponseEmitter implements ResponseEmitter {
         // 构建聊天参数
         ChatCompletion chatCompletion = ChatCompletion.builder()
                 .maxTokens(1000)
-                //.model(chatConfig.getOpenaiApiModel())
                 .model("gpt-4")  //
-
                 // [0, 2] 越低越精准
                 .temperature(0.8)
                 .topP(1.0)
@@ -141,7 +146,7 @@ public class ApiKeyResponseEmitter implements ResponseEmitter {
                 .setOriginalRequestData(ObjectMapperUtil.toJson(chatCompletion))
                 .setChatMessageDO(chatMessageDO)
                 .build();
-
+        log.info("api model is here========> " + chatCompletion.getModel());
         ApiKeyChatClientBuilder4.buildOpenAiStreamClient().streamChatCompletion(chatCompletion, parsedEventSourceListener);
         return emitter;
     }

@@ -4,6 +4,7 @@ import cn.hutool.extra.spring.SpringUtil;
 import com.hncboy.chatgpt.base.config.ChatConfig;
 import com.hncboy.chatgpt.base.enums.ApiTypeEnum;
 import com.hncboy.chatgpt.base.util.OkHttpClientUtil;
+import com.hncboy.chatgpt.front.handler.emitter.MyDynamicKeyOpenAiAuthInterceptor;
 import com.unfbx.chatgpt.OpenAiStreamClient;
 import com.unfbx.chatgpt.entity.billing.BillingUsage;
 import com.unfbx.chatgpt.entity.billing.CreditGrantsResponse;
@@ -55,13 +56,14 @@ public class ApiKeyChatClientBuilder {
                 .builder()
                 .apiHost(chatConfig.getOpenaiApiBaseUrl())
                 .keyStrategy(new KeyRandomStrategy())
-                .authInterceptor(new DynamicKeyOpenAiAuthInterceptor())
+                .authInterceptor(new MyDynamicKeyOpenAiAuthInterceptor())
                 //.apiKey(Collections.singletonList(chatConfig.getOpenaiApiKey()))
-                .apiKey(splitString(chatConfig.getOpenaiApiKey3(),","))
+                .apiKey(chatConfig.getOpenaiApiKey3List())
                 .okHttpClient(okHttpClient)
                 .build();
         log.info("api key is here========> " + oas.getApiKey());
-        log.info("api model is here========> " + chatConfig.getOpenaiApiModel().toString());
+
+
         subscription(oas);
         return oas;
 //        return OpenAiStreamClient.builder()

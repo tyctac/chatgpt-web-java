@@ -44,6 +44,7 @@ public class ResponseBodyEmitterStreamListener extends AbstractStreamListener {
     @Override
     public void onError(String receivedMessage, Throwable t, @Nullable Response response) {
         String responseStr = null;
+        log.warn("debug exception here ====>", receivedMessage);
         try {
             ChatReplyMessageVO chatReplyMessageVO = new ChatReplyMessageVO();
 

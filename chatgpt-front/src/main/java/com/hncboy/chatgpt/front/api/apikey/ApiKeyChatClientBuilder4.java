@@ -53,11 +53,11 @@ public class ApiKeyChatClientBuilder4 {
                 .keyStrategy(new KeyRandomStrategy())
                 .authInterceptor(new DynamicKeyOpenAiAuthInterceptor())
                 //.apiKey(Collections.singletonList(chatConfig.getOpenaiApiKey()))
-                .apiKey(splitString(chatConfig.getOpenaiApiKey4(),","))
+                .apiKey(chatConfig.getOpenaiApiKey4List())
                 .okHttpClient(okHttpClient)
                 .build();
         log.info("api key is here========> " + oas.getApiKey());
-        log.info("api model is here========> " + chatConfig.getOpenaiApiModel().toString());
+        //log.info("api model is here========> " + chatConfig.getOpenaiApiModel().toString());
         subscription(oas);
         return oas;
 //        return OpenAiStreamClient.builder()

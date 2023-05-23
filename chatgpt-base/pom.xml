@@ -9,4 +9,11 @@
     </parent>
     <artifactId>chatgpt-base</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.unfbx</groupId>
+            <artifactId>chatgpt-java</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </project>
