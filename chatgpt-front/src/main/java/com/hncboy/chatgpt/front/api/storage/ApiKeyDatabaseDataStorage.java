@@ -3,6 +3,7 @@ package com.hncboy.chatgpt.front.api.storage;
 import cn.hutool.core.util.StrUtil;
 import com.hncboy.chatgpt.base.domain.entity.AccountBalanceDO;
 import com.hncboy.chatgpt.base.domain.entity.ChatMessageDO;
+import com.hncboy.chatgpt.base.enums.FrontUserBalanceTypeEnum;
 import com.hncboy.chatgpt.base.service.AccountBalanceService;
 import com.hncboy.chatgpt.front.util.FrontUserUtil;
 import com.unfbx.chatgpt.utils.TikTokensUtil;
@@ -10,7 +11,11 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author hncboy
@@ -76,11 +81,30 @@ public class ApiKeyDatabaseDataStorage extends AbstractDatabaseDataStorage {
         // count token left
         if (questionChatMessageDO.getModelName() == "gpt-4"){
             AccountBalanceDO accountBalanceDO = accountBalanceService.getAccountBalanceByid(questionChatMessageDO.getUserId());
-//            Integer tokenLeft = accountBalanceDO.getTokenLeft() - completionTokens;
-            Integer tokenLeft = accountBalanceDO.getTokenLeft() - promptTokens;
+            FrontUserBalanceTypeEnum balanceType = accountBalanceDO.getBalanceType();
+            if (balanceType == FrontUserBalanceTypeEnum.TOKEN) {
+                Integer tokenLeft = accountBalanceDO.getTokenLeft() - promptTokens;
 
-            accountBalanceDO.setTokenLeft(tokenLeft);
-            accountBalanceService.updateById(accountBalanceDO);
+                accountBalanceDO.setTokenLeft(tokenLeft);
+                accountBalanceService.updateById(accountBalanceDO);
+            } else {
+                String originDateStr = accountBalanceDO.getOriginalDate();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date current = new Date();
+                try {
+                    Date oriDt = sdf.parse(originDateStr);
+                    long miliseconds = current.getTime() - oriDt.getTime();
+                    if (miliseconds <0 ){
+                        String newDt = sdf.format(current);
+                        accountBalanceDO.setOriginalDate(newDt);
+                    }
+                }
+                catch (ParseException e) {
+                    String newDt = sdf.format(current);
+                    accountBalanceDO.setOriginalDate(newDt);
+
+                }
+            }
         }
 
     }

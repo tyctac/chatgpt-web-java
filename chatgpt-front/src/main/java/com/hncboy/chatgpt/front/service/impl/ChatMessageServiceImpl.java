@@ -22,6 +22,7 @@ import com.hncboy.chatgpt.front.mapper.ChatMessageMapper;
 import com.hncboy.chatgpt.front.service.ChatMessageService;
 import com.hncboy.chatgpt.front.service.ChatRoomService;
 import com.hncboy.chatgpt.front.util.FrontUserUtil;
+import com.hncboy.chatgpt.front.util.ToolUtil;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -92,8 +93,8 @@ public class ChatMessageServiceImpl extends ServiceImpl<ChatMessageMapper, ChatM
         ChatMessageDO chatMessageDO = new ChatMessageDO();
 //        AccountBalanceDO accountBalance =
         AccountBalanceDO accountBalanceDO = accountBalanceService.getAccountBalanceByid(FrontUserUtil.getUserId());
-        Integer tokenLeft = accountBalanceDO.getTokenLeft();
-        if (isModel3 == false && tokenLeft < 0){
+        boolean isValid = ToolUtil.checkVIPExpired(accountBalanceDO);
+        if (isModel3 == false && isValid==false){
             throw new ServiceException("余额不足");
         }
 

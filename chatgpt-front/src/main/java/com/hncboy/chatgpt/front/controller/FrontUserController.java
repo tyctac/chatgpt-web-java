@@ -1,17 +1,27 @@
 package com.hncboy.chatgpt.front.controller;
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.extra.spring.SpringUtil;
+import com.hncboy.chatgpt.base.config.ChatConfig;
 import com.hncboy.chatgpt.base.enums.FrontUserRegisterTypeEnum;
 import com.hncboy.chatgpt.base.handler.response.R;
+import com.hncboy.chatgpt.base.util.StringUtil;
+import com.hncboy.chatgpt.front.domain.request.ChatProcessRequest;
 import com.hncboy.chatgpt.front.domain.request.LoginFrontUserByEmailRequest;
 import com.hncboy.chatgpt.front.domain.request.RegisterFrontUserForEmailRequest;
+import com.hncboy.chatgpt.front.domain.request.UserBalanceRequest;
 import com.hncboy.chatgpt.front.domain.vo.LoginInfoVO;
 import com.hncboy.chatgpt.front.domain.vo.RegisterCaptchaVO;
+import com.hncboy.chatgpt.front.domain.vo.UserBalanceVO;
 import com.hncboy.chatgpt.front.domain.vo.UserInfoVO;
+import com.hncboy.chatgpt.front.service.FrontUserGetService;
 import com.hncboy.chatgpt.front.service.FrontUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 
 /**
  * 前端用户控制器
@@ -32,6 +43,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class FrontUserController {
 
     private final FrontUserService frontUserService;
+
+    private final FrontUserGetService frontUserGetService;
+
 
     @Operation(summary = "邮件验证回调")
     @GetMapping("/verify_email_code")
@@ -64,4 +78,13 @@ public class FrontUserController {
     public R<LoginInfoVO> login(@RequestBody LoginFrontUserByEmailRequest request) {
         return R.data(frontUserService.login(FrontUserRegisterTypeEnum.EMAIL, request.getUsername(), request.getPassword()));
     }
+
+    @Operation(summary = "get token left")
+    @PostMapping("/balance")
+    public R<UserBalanceVO> getLeft(@RequestBody @Validated UserBalanceRequest userBalanceRequest) {
+        // TODO 后续调整
+        return R.data(frontUserGetService.getUserBalance(FrontUserRegisterTypeEnum.EMAIL, Integer.valueOf(userBalanceRequest.getUuid())));
+
+    }
+
 }

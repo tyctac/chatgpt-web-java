@@ -20,8 +20,8 @@ chat:
 #  openai_api_key3: ${CHAT_OPENAI_API_KEY3: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,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,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}
   openai_api_key3: ${CHAT_OPENAI_API_KEY3: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,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}
 
-#  openai_api_key4: ${CHAT_OPENAI_API_KEY4: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}
-  openai_api_key4: ${CHAT_OPENAI_API_KEY4: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}
+#  openai_api_key4: ${CHAT_OPENAI_API_KEY4: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}   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
+  openai_api_key4: ${CHAT_OPENAI_API_KEY4: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}
 
   # change this to an `accessToken` extracted from the ChatGPT site's `https://chat.openai.com/api/auth/session` response
   openai_access_token: ${CHAT_OPENAI_ACCESS_TOKEN:}

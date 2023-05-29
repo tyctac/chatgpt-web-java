@@ -1,6 +1,8 @@
 package com.hncboy.chatgpt.base.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.hncboy.chatgpt.base.enums.FrontUserBalanceTypeEnum;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
@@ -20,7 +22,30 @@ public class AccountBalanceDO {
 
 
     /**
-     * 消息 id
+     * tokenLeft
      */
     private Integer tokenLeft;
+
+
+    /**
+     * balanceType
+     */
+    private FrontUserBalanceTypeEnum balanceType;
+
+
+    /**
+     * daysLeft
+     */
+    private Integer daysLeft;
+
+    /**
+     * daysTotal
+     */
+    private Integer daysTotal;
+
+
+    /**
+     * originalData
+     */
+    private String originalDate;
 }

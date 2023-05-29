@@ -19,4 +19,6 @@ public interface AccountBalanceService extends IService<AccountBalanceDO> {
      */
     AccountBalanceDO getAccountBalanceByid(Integer userid);
 
+
+
 }

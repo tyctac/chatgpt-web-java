@@ -1,12 +1,15 @@
 package com.hncboy.chatgpt.front.service.impl;
 
 import cn.hutool.core.util.IdUtil;
+import com.hncboy.chatgpt.base.domain.entity.AccountBalanceDO;
 import com.hncboy.chatgpt.base.enums.FrontUserRegisterTypeEnum;
+import com.hncboy.chatgpt.base.service.AccountBalanceService;
 import com.hncboy.chatgpt.base.util.SimpleCaptchaUtil;
 import com.hncboy.chatgpt.front.domain.bo.JwtUserInfoBO;
 import com.hncboy.chatgpt.front.domain.request.RegisterFrontUserForEmailRequest;
 import com.hncboy.chatgpt.front.domain.vo.LoginInfoVO;
 import com.hncboy.chatgpt.front.domain.vo.RegisterCaptchaVO;
+import com.hncboy.chatgpt.front.domain.vo.UserBalanceVO;
 import com.hncboy.chatgpt.front.domain.vo.UserInfoVO;
 import com.hncboy.chatgpt.front.service.FrontUserService;
 import com.hncboy.chatgpt.front.service.strategy.user.AbstractRegisterTypeStrategy;
@@ -22,6 +25,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class FrontUserServiceImpl implements FrontUserService {
 
+    private  AccountBalanceService accountBalanceService;
     @Override
     public void register(RegisterFrontUserForEmailRequest request) {
         AbstractRegisterTypeStrategy registerStrategy = AbstractRegisterTypeStrategy.findStrategyByRegisterType(request.getRegisterType());
@@ -63,4 +67,6 @@ public class FrontUserServiceImpl implements FrontUserService {
         JwtUserInfoBO jwtUserInfo = FrontUserUtil.getJwtUserInfo();
         return getUserInfo(jwtUserInfo.getRegisterType(), jwtUserInfo.getExtraUserId());
     }
+
+
 }

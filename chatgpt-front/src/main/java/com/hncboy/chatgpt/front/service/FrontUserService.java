@@ -4,6 +4,7 @@ import com.hncboy.chatgpt.base.enums.FrontUserRegisterTypeEnum;
 import com.hncboy.chatgpt.front.domain.request.RegisterFrontUserForEmailRequest;
 import com.hncboy.chatgpt.front.domain.vo.LoginInfoVO;
 import com.hncboy.chatgpt.front.domain.vo.RegisterCaptchaVO;
+import com.hncboy.chatgpt.front.domain.vo.UserBalanceVO;
 import com.hncboy.chatgpt.front.domain.vo.UserInfoVO;
 
 /**
@@ -53,6 +54,7 @@ public interface FrontUserService {
      * @return 登录的用户信息
      */
     UserInfoVO getLoginUserInfo();
+
 
     /**
      * 生成基于 Base64 的图形验证码
