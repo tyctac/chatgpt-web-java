@@ -7,6 +7,10 @@ USE chat;
 CREATE TABLE IF NOT EXISTS `account_balance`  (
    `user_id` bigint NOT NULL COMMENT '用户 id,主键',
    `token_left` int NOT NULL COMMENT 'gpt4 token left',
+   `balance_type` varchar(20) NOT NULL COMMENT 'balance_type',
+    `days_left` int NOT NULL COMMENT 'days_left',
+    `days_total` int NOT NULL COMMENT 'days_total',
+    `original_Date` varchar(20) NOT NULL COMMENT 'original_Date',
     PRIMARY KEY (`user_id`) USING BTREE
     ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = 'user account token left' ROW_FORMAT = Dynamic;
 
