@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `account_balance`  (
    `balance_type` varchar(20) NOT NULL COMMENT 'balance_type',
     `days_left` int NOT NULL COMMENT 'days_left',
     `days_total` int NOT NULL COMMENT 'days_total',
-    `original_Date` varchar(20) NOT NULL COMMENT 'original_Date',
+    `original_date` varchar(20) NOT NULL COMMENT 'original_Date',
     PRIMARY KEY (`user_id`) USING BTREE
     ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = 'user account token left' ROW_FORMAT = Dynamic;
 
